@@ -1,0 +1,5 @@
+import {describe,it,expect} from 'vitest';
+import {dateForNight,enrich,gradient,minsBetween,checkInterval} from './logic';
+import {DEFAULT_PREFS,type SleepRecord} from './models';
+const r:SleepRecord={id:'1',sleepDate:'2026-11-10',bedtime:'2026-11-10T18:00:00.000Z',wakeup:'2026-11-11T02:30:00.000Z',createdAt:'2026-11-11T02:30:00.000Z',updatedAt:'2026-11-11T02:30:00.000Z',sourceBed:'manual',sourceWake:'manual'};
+describe('sleep calculation',()=>{it('keeps actual time in bed distinct from estimate',()=>{const x=enrich(r,DEFAULT_PREFS);expect(x.bedMinutes).toBe(510);expect(x.estimatedMinutes).toBe(465);expect(x.status).toBe('below')});it('checks dates across midnight',()=>{expect(minsBetween('2026-11-10T23:30:00+05:30','2026-11-11T07:00:00+05:30')).toBe(450)});it('does not permit negative intervals',()=>expect(()=>checkInterval(r.wakeup!,r.bedtime)).toThrow());it('labels early morning as prior night',()=>{expect(dateForNight(new Date(2026,10,11,1,30),6)).toBe('2026-11-10')});it('colours ideal green and short red',()=>{expect(gradient(510,DEFAULT_PREFS)).toBe('#40b995');expect(gradient(300,DEFAULT_PREFS)).toBe('#ef6067')});});

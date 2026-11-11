@@ -1,0 +1,4 @@
+export interface SleepRecord { id:string; sleepDate:string; bedtime:string; wakeup:string|null; createdAt:string; updatedAt:string; sourceBed:'now'|'manual'; sourceWake:'now'|'manual'|null; note?:string }
+export interface Preferences { id:'main'; latencyMinutes:number; idealMinMinutes:number; idealMaxMinutes:number; yellowLowMinutes:number; redLowMinutes:number; yellowHighMinutes:number; redHighMinutes:number; fluctuationMinutes:number; dayCutoffHour:number }
+export const DEFAULT_PREFS:Preferences = {id:'main',latencyMinutes:45,idealMinMinutes:480,idealMaxMinutes:540,yellowLowMinutes:435,redLowMinutes:390,yellowHighMinutes:570,redHighMinutes:600,fluctuationMinutes:90,dayCutoffHour:6};
+export interface EnrichedSleep extends SleepRecord { bedMinutes:number|null; estimatedMinutes:number|null; bedHour:number|null; wakeHour:number|null; status:'ideal'|'below'|'above'|'incomplete' }
