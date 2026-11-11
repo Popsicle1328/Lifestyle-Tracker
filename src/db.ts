@@ -22,7 +22,7 @@ export async function upsertSleep(rec:SleepRecord){
  await db.sleep.put(rec);
 }
 export async function initializeCatalogAndDemo(){
- await db.transaction('rw',db.exercises,db.sleep,db.workoutSessions,db.workoutSets,db.cardioIntervals,db.appMeta,async()=>{
+ await db.transaction('rw',[db.exercises,db.sleep,db.workoutSessions,db.workoutSets,db.cardioIntervals,db.appMeta],async()=>{
   // In-place upgrade without overwriting any user's records or edited catalog entries.
   for(const exercise of initialExercises)if(!await db.exercises.get(exercise.id))await db.exercises.add(exercise);
   if(await db.appMeta.get('demoInitialized'))return;
@@ -73,7 +73,7 @@ export async function restoreBackup(input:unknown){
  if(![sessions.map(s=>s.id),sets.map(s=>s.id),cardio.map(s=>s.id),exercises.map(s=>s.id)].every(unique))throw Error('Backup contains duplicate identifiers.');
  const sessionIds=new Set(sessions.map(s=>s.id));const exerciseIds=new Set(exercises.map(e=>e.id));
  if(sets.some(s=>!sessionIds.has(s.sessionId)||!exerciseIds.has(s.exerciseId))||cardio.some(c=>!sessionIds.has(c.sessionId)))throw Error('Backup contains orphaned workout records.');
- await db.transaction('rw',db.sleep,db.preferences,db.exercises,db.workoutSessions,db.workoutSets,db.cardioIntervals,db.appMeta,async()=>{
+ await db.transaction('rw',[db.sleep,db.preferences,db.exercises,db.workoutSessions,db.workoutSets,db.cardioIntervals,db.appMeta],async()=>{
   await Promise.all([db.sleep.clear(),db.exercises.clear(),db.workoutSessions.clear(),db.workoutSets.clear(),db.cardioIntervals.clear()]);
   await db.sleep.bulkAdd(parsed.sleep);await db.preferences.put(parsed.preferences);await db.exercises.bulkAdd(exercises);await db.workoutSessions.bulkAdd(sessions);await db.workoutSets.bulkAdd(sets);await db.cardioIntervals.bulkAdd(cardio);await db.appMeta.put({id:'demoInitialized',value:'restored'});
  });
