@@ -1,92 +1,78 @@
-# Daymark — Fitness & Lifestyle PWA (v0.1)
+# Daymark — Personal Fitness & Lifestyle PWA (v0.2)
 
-A **local-first, zero-subscription** personal fitness tracker. Sleep is the only active module in this preview. Nutrition, cardio, workout, and body weight are deliberately locked until requirements are defined.
+A local-first, mobile-friendly React + Vite + TypeScript PWA. Current testable trackers: **Sleep** and **Workouts**. Other modules remain locked.
 
-## Current functionality
+## What's new in v0.2
 
-- **One-tap bedtime / wake-up** using the current phone time. A bedtime creates an open night; wake-up closes it.
-- Manual entry or correction of both timestamps, with a separate editable **assigned sleep date** (one night per assigned date).
-- Time in bed and **adjusted estimate = max(0, time in bed − 45 minutes)**. The 45-minute assumption is editable in Settings; it is NOT a clinical measurement of actual sleep.
-- Past-14-day chart of time in bed and colour-coded adjusted-duration curve, with 14/30/60/90-day options and horizontal scrolling of wider ranges.
-- Bedtime / wake-up clock-time chart with overnight durations shaded. Clock times are plotted on an unwrapped timeline anchored to the assigned sleep date (e.g. 01:00 next day = hour 25).
-- Full 30-calendar-day summary with recorded ideal/out-of-target nights and unrecorded or incomplete nights separately.
-- Fluctuation alerts when consecutive **recorded** nights differ by at least 90 minutes (configurable). This does not assume unrecorded nights have zero sleep.
-- IndexedDB (Dexie) local database, JSON backup/restore, CSV export, dated local preferences, and offline app shell caching.
+- Demonstration data automatically loads **once per browser/device** the first time this version opens: 30 sample sleep nights, 12 sample workouts, 144 sample sets, 4 incline-treadmill intervals, and a 35-item exercise catalog (34 strength/bodyweight variants + one cardio).
+- Sample records are tagged `DEMO` / `isDemo:true`; they are not presented as actual history and **never replace an existing sleep night**.
+- Settings > Sample data controls lets you **remove demo records only**, or reload missing sample dates. Personal records remain untouched.
+- Sleep journal > History > **Edit** to modify a night. Manual entry now has **one assigned sleep date** plus bedtime/wake-up clock times (with an explicit after-midnight checkbox).
+- Workout Tracker unlocked: start/pause/resume/finish session, optionally enter body weight, log sets with automatically saved completion timestamps, edit sets preserving timestamps, set types (working / warm-up / drop set), effort tags, superset groups and machine-level / per-dumbbell / total-load / bodyweight units.
+- Workout history, initial progress trends, interactive *schematic* muscle frequency map, exercises library, incline treadmill logging and activity-level calorie estimates.
+- Daily overview: last 14 days training markers and active workout minutes (excludes paused time).
+- Export full JSON v2 or sleep / workout / cardio CSV. Restore older v1 sleep-only JSON backups or v2 backups.
 
-## Time/day semantics
+## Important constraints
 
-By default, between 00:00 and 05:59 a one-tap **bedtime** is assigned to the **previous day**; otherwise to the current day. This 06:00 cutoff is a provisional configurable convenience, not an assumption about your actual sleep schedule. Both manual records and edited records explicitly allow you to change the assigned sleep date. Only one record per assigned date is allowed in this version.
+- **Not real data:** Demo dates, loads, body mass (70 kg in sample workouts), and exercise performance are illustrative. Remove samples before using the app as your authoritative journal.
+- **No arbitrary progression prescription:** Your rep ranges, increments, minimum comparable session counts and plateau rules have not been finalised. The initial progress page deliberately shows neutral context notes rather than pretending to know when you should raise the load.
+- **Calories are estimates:** Resistance time uses illustrative 3.5-MET gross expenditure. Treadmill uses ACSM steady-state walking calculation. Mass must be entered for real sessions; no default personal body weight is assumed. Treadmill minutes are removed from general resistance-session time to avoid double counting.
+- **Rest is approximate:** v0.2 timestamps taps when a set is completed. Time between two completion taps is **not** precisely the rest interval. A future start/done-set workflow could improve this.
+- **Load conventions:** Every real set requires an explicit choice between kg per dumbbell, total kg, machine level, stack kg or bodyweight. Demo load conventions are clearly tagged and not necessarily yours.
+- **Data does not sync:** IndexedDB is isolated by browser/device. Back up before clearing site data or changing domains.
+- Progress and muscle map infer anatomical *emphasis* rather than measuring muscle-head strength.
 
-The 30-day missed-target statistic counts only **completed records outside the selected ideal range**. Days without a record and open records are not counted as "missed"; they are shown separately. Values are recalculated based on current settings, so changing the targets also changes historical classification while raw times remain unmodified.
+## How to update your existing GitHub Pages installation
 
-## Prerequisites
+Repository currently used in this project: `https://github.com/Popsicle1328/Lifestyle-Tracker`.
 
-- A GitHub account and a **public** GitHub repository for free GitHub Pages hosting.
-- Node.js 22 LTS and npm if testing locally (optional; GitHub Actions can build it for you).
-- The GitHub Pages URL uses HTTPS and is suitable for PWA installation in Chrome on Android.
+**Before uploading code:** open the *existing* PWA on your device, go to **Settings & data > Export complete JSON backup**, and save the downloaded file outside browser storage. Existing IndexedDB is preserved by this version's Dexie v1→v2 migration, but always keep a backup.
 
-## Run locally (optional)
+### Browser-only method
+
+1. Extract `daymark-v0.2-github-update.zip` on your PC.
+2. Open the extracted `UPLOAD_TO_REPOSITORY_ROOT` folder. **Select its contents, not the enclosing folder.**
+3. On your GitHub `Lifestyle-Tracker` repository's **Code** tab, choose **Add file > Upload files**.
+4. Drag the selected `src` folder and root-level files. The existing matching paths should appear as changed; confirm `src/App.tsx`, `src/db.ts`, etc. are in the *root* `src` folder, **not** under `UPLOAD_TO_REPOSITORY_ROOT/src` or `aurora-fitness/src`.
+5. Commit with message `Add workout tracker and removable demo data` on `main`.
+6. Open **Actions > newest Deploy PWA to GitHub Pages run** and check that both `npm run test` and `npm run build` succeed.
+7. Open `https://popsicle1328.github.io/Lifestyle-Tracker/`, reload to fetch the new service worker, and test both trackers. On Android, reopening/reloading an installed PWA may be necessary to activate updated cached assets.
+
+**Do not upload the `.zip` file itself to GitHub.** GitHub Pages does not unpack source ZIP uploads for you. Do not delete your repository or clear browser data to update the code.
+
+If your web upload refuses to replace a file, edit that file through GitHub's pencil editor or use GitHub Desktop to commit the extracted files. The source folder structure must be preserved.
+
+### Full source project
+
+`daymark-fitness-pwa-v0.2-full.zip` contains the full React project including the hidden `.github/workflows/deploy.yml`, and can be used for a fresh repository. The update ZIP deliberately omits `.github` because your existing deployment workflow is already configured.
+
+## Development locally
+
+Install Node 22+ and use:
 
 ```bash
 npm install
+npm run test
+npm run build
 npm run dev
 ```
 
-Then open the local address printed in your terminal. Service worker/offline testing should be done on a deployed HTTPS URL or with the production preview after `npm run build`.
+`npm install` creates `package-lock.json`. Commit this lockfile if you develop locally; the included workflow has `cache: npm` removed and works without a lockfile by running `npm install`.
 
-Run automated checks:
+## Database / backup design
 
-```bash
-npm test
-npm run build
-```
+Dexie `daymark-local-v1`: version 1 had `sleep` and `preferences`. Version 2 adds `exercises`, `workoutSessions`, `workoutSets`, `cardioIntervals`, and `appMeta`. The DB name stays unchanged so data survives the upgrade on the **same origin**.
 
-## Deploy to GitHub Pages — no local development setup needed
+- `sleep`: actual timestamps, assigned sleep night, source and `isDemo`.
+- `exercises`: library of 35 initial activities (muscles, equipment, aliases, review flags).
+- `workoutSessions`: session start/finish, pause intervals, body mass, status and date.
+- `workoutSets`: one set per record, unit, weight, reps, completion timestamp, kind, stages for drop sets, superset group and effort.
+- `cardioIntervals`: treadmill intervals per session with speed, incline and duration.
+- `appMeta`: demo insertion marker to prevent re-creating demo records each load.
 
-1. Go to https://github.com/new.
-2. Repository name: `daymark-fitness` (or another name). Set **Public**; do not tick any starter files. Create repository.
-3. Unzip this package on your computer, preserving the `.github/workflows/deploy.yml` directory.
-4. On the repository page select **Add file → Upload files**, and drag the **contents** of the unzipped `aurora-fitness` directory into the upload area, not the containing directory. Ensure `.github/workflows/deploy.yml` is included. GitHub's web upload may not preserve hidden directories; if needed create the workflow separately using **Add file → Create new file**, with filename `.github/workflows/deploy.yml`, and paste its content.
-5. Commit to the `main` branch.
-6. Go to **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-7. Visit **Actions**. The workflow runs `npm install`, `npm test`, `npm run build`, and publishes `dist`.
-8. Open `https://YOUR-USERNAME.github.io/daymark-fitness/` after the workflow reports a successful deployment. If you chose a different repo name, substitute it in the URL.
-9. In Chrome on Android, open the HTTPS URL → browser menu → **Add to Home screen** or **Install app**.
+Backup v2 captures all these tables (except internal app metadata), validates record shapes and cross-references before a transaction that replaces local records. **Restore replaces data, not merges.** Old v1 backups remain supported and restore sleep-only history.
 
-With `base: './'` in `vite.config.ts`, the built assets work at a GitHub Pages project subpath. Offline caching is generated by `vite-plugin-pwa`.
+## QA status
 
-### Updating the code
-
-Keep all code in GitHub. When a module is updated, commit the changed files to `main`. GitHub Actions rebuilds and deploys. **App updates do not intentionally reset IndexedDB**, but export a backup before major releases or changing the domain/repository path.
-
-## Data protection
-
-- GitHub hosts **code only**. Your entries stay in IndexedDB in the browser profile of the device you use. There is **no Android ↔ desktop sync**.
-- In **Settings & data → Export complete JSON backup**, download a full backup. Keep copies outside the browser / phone. Periodically test restores.
-- Restoring a JSON backup **replaces** local sleep records and preferences after explicit confirmation; it is not a merge.
-- CSV provides convenient analysis with sleepDate, ISO timestamps, raw minutes and estimate computed using the current configured adjustment.
-- Browser data can be cleared or evicted, and PWA uninstall may remove locally stored data. Backups are required for reliability.
-- No external API is needed. The CSS references optional Google Fonts (online only); local system fonts render offline if unavailable.
-
-## Known open decisions before v0.2
-
-- Whether a single sleep date can have multiple intervals (split sleep / naps).
-- Default automatic assigned-day cutoff (currently 06:00, changeable in Settings).
-- Whether an open night should be automatically flagged/closed at a particular time.
-- Whether to preserve historical settings per sleep record rather than reclassifying older records under current rules.
-- Whether to support rules to detect chronotype, weekend drift and late-night consistency, and their thresholds.
-
-## Repository layout
-
-```text
-src/App.tsx       Application shell, all visible modules, Sleep UI, charts and settings
-src/styles.css    Responsive light-theme design
-src/db.ts         Dexie schema, validated import/export, CSV
-src/logic.ts      Sleep-date assignment, calculations, duration colours
-src/models.ts     Data models and configurable preferences
-src/logic.test.ts Automated sleep logic tests
-public/           PWA icons and source SVG
-.github/workflows/deploy.yml GitHub Actions deployment pipeline
-```
-
-The goal is to build all other modules **one at a time**, using rules defined by the owner and keeping raw records independent of derived values.
+Source TS/TSX was syntactically transpile-checked. A local source verification script passed sample integrity (30+12+144+4) and arithmetic invariants. A full dependency installation/build was **not possible inside this environment** because access to npm's registry was unavailable. GitHub Actions must be used for the first complete typecheck, Vitest suite, Vite build and live PWA check; do not assume deployment passed until the workflow is green.

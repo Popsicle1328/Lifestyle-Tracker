@@ -1,0 +1,615 @@
+{
+  "schemaVersion": "0.1",
+  "status": "proposed_seeds_not_imported",
+  "description": "34 resistance/bodyweight variations and 1 treadmill cardio activity derived from the user's initial list. Review all provisional entries before merging into application IndexedDB.",
+  "muscleTaxonomyNote": "Primary/secondary mappings indicate anatomical involvement, not precise muscle-head activation or an isolated strength measure. Do not double-count compound exercise muscle frequency as independent exclusive sessions.",
+  "exercises": [
+    {
+      "id": "flat_barbell_bench_press",
+      "name": "Flat Barbell Bench Press",
+      "category": "chest",
+      "equipment": "barbell",
+      "loadMode": "external_kg",
+      "primaryMuscles": [
+        "sternocostal_pectoralis_major"
+      ],
+      "secondaryMuscles": [
+        "anterior_deltoid",
+        "triceps_brachii"
+      ],
+      "reviewStatus": "provisional_muscle_mapping",
+      "notes": "Barbell load should be recorded as total weight including bar only if user confirms.",
+      "aliases": []
+    },
+    {
+      "id": "flat_dumbbell_bench_press",
+      "name": "Flat Dumbbell Bench Press",
+      "category": "chest",
+      "equipment": "dumbbell",
+      "loadMode": "external_kg",
+      "primaryMuscles": [
+        "sternocostal_pectoralis_major"
+      ],
+      "secondaryMuscles": [
+        "anterior_deltoid",
+        "triceps_brachii"
+      ],
+      "reviewStatus": "provisional_muscle_mapping",
+      "notes": "Dumbbell load basis (each hand vs combined) must be confirmed.",
+      "aliases": []
+    },
+    {
+      "id": "incline_barbell_bench_press",
+      "name": "Incline Barbell Bench Press",
+      "category": "chest",
+      "equipment": "barbell",
+      "loadMode": "external_kg",
+      "primaryMuscles": [
+        "clavicular_pectoralis_major"
+      ],
+      "secondaryMuscles": [
+        "anterior_deltoid",
+        "triceps_brachii"
+      ],
+      "reviewStatus": "provisional_muscle_mapping",
+      "notes": "Barbell load should be recorded as total weight including bar only if user confirms.",
+      "aliases": []
+    },
+    {
+      "id": "incline_dumbbell_bench_press",
+      "name": "Incline Dumbbell Bench Press",
+      "category": "chest",
+      "equipment": "dumbbell",
+      "loadMode": "external_kg",
+      "primaryMuscles": [
+        "clavicular_pectoralis_major"
+      ],
+      "secondaryMuscles": [
+        "anterior_deltoid",
+        "triceps_brachii"
+      ],
+      "reviewStatus": "provisional_muscle_mapping",
+      "notes": "Dumbbell load basis (each hand vs combined) must be confirmed.",
+      "aliases": []
+    },
+    {
+      "id": "decline_barbell_bench_press",
+      "name": "Decline Barbell Bench Press",
+      "category": "chest",
+      "equipment": "barbell",
+      "loadMode": "external_kg",
+      "primaryMuscles": [
+        "sternocostal_pectoralis_major"
+      ],
+      "secondaryMuscles": [
+        "anterior_deltoid",
+        "triceps_brachii"
+      ],
+      "reviewStatus": "provisional_muscle_mapping",
+      "notes": "Barbell load should be recorded as total weight including bar only if user confirms.",
+      "aliases": []
+    },
+    {
+      "id": "decline_dumbbell_bench_press",
+      "name": "Decline Dumbbell Bench Press",
+      "category": "chest",
+      "equipment": "dumbbell",
+      "loadMode": "external_kg",
+      "primaryMuscles": [
+        "sternocostal_pectoralis_major"
+      ],
+      "secondaryMuscles": [
+        "anterior_deltoid",
+        "triceps_brachii"
+      ],
+      "reviewStatus": "provisional_muscle_mapping",
+      "notes": "Dumbbell load basis (each hand vs combined) must be confirmed.",
+      "aliases": []
+    },
+    {
+      "id": "machine_chest_press",
+      "name": "Machine Chest Press",
+      "category": "chest",
+      "equipment": "chest_press_machine",
+      "loadMode": "machine_kg_or_level",
+      "primaryMuscles": [
+        "pectoralis_major"
+      ],
+      "secondaryMuscles": [
+        "anterior_deltoid",
+        "triceps_brachii"
+      ],
+      "reviewStatus": "needs_confirmation",
+      "notes": "Machine load unit/stack or plate configuration required.",
+      "aliases": []
+    },
+    {
+      "id": "standard_push_up",
+      "name": "Standard Push-Up",
+      "category": "chest",
+      "equipment": "bodyweight",
+      "loadMode": "bodyweight_or_assisted",
+      "primaryMuscles": [
+        "pectoralis_major"
+      ],
+      "secondaryMuscles": [
+        "triceps_brachii",
+        "anterior_deltoid",
+        "core_stabilizers"
+      ],
+      "reviewStatus": "provisional_muscle_mapping",
+      "notes": "",
+      "aliases": []
+    },
+    {
+      "id": "wide_grip_push_up",
+      "name": "Wide-Hand Push-Up",
+      "category": "chest",
+      "equipment": "bodyweight",
+      "loadMode": "bodyweight_or_assisted",
+      "primaryMuscles": [
+        "pectoralis_major"
+      ],
+      "secondaryMuscles": [
+        "triceps_brachii",
+        "anterior_deltoid",
+        "core_stabilizers"
+      ],
+      "reviewStatus": "provisional_muscle_mapping",
+      "notes": "",
+      "aliases": []
+    },
+    {
+      "id": "barbell_overhead_press",
+      "name": "Barbell Overhead Shoulder Press",
+      "category": "shoulders",
+      "equipment": "barbell",
+      "loadMode": "external_kg",
+      "primaryMuscles": [
+        "anterior_deltoid",
+        "lateral_deltoid"
+      ],
+      "secondaryMuscles": [
+        "triceps_brachii",
+        "upper_trapezius"
+      ],
+      "reviewStatus": "provisional_muscle_mapping",
+      "notes": "Dumbbell vs barbell load basis must be confirmed.",
+      "aliases": []
+    },
+    {
+      "id": "dumbbell_overhead_press",
+      "name": "Dumbbell Overhead Shoulder Press",
+      "category": "shoulders",
+      "equipment": "dumbbell",
+      "loadMode": "external_kg",
+      "primaryMuscles": [
+        "anterior_deltoid",
+        "lateral_deltoid"
+      ],
+      "secondaryMuscles": [
+        "triceps_brachii",
+        "upper_trapezius"
+      ],
+      "reviewStatus": "provisional_muscle_mapping",
+      "notes": "Dumbbell vs barbell load basis must be confirmed.",
+      "aliases": []
+    },
+    {
+      "id": "dumbbell_lateral_raise",
+      "name": "Dumbbell Lateral Raise",
+      "category": "shoulders",
+      "equipment": "dumbbell",
+      "loadMode": "external_kg",
+      "primaryMuscles": [
+        "lateral_deltoid"
+      ],
+      "secondaryMuscles": [
+        "supraspinatus",
+        "upper_trapezius"
+      ],
+      "reviewStatus": "provisional_muscle_mapping",
+      "notes": "",
+      "aliases": []
+    },
+    {
+      "id": "bent_arm_lateral_raise",
+      "name": "Bent-Arm Dumbbell Lateral Raise",
+      "category": "shoulders",
+      "equipment": "dumbbell",
+      "loadMode": "external_kg",
+      "primaryMuscles": [
+        "lateral_deltoid"
+      ],
+      "secondaryMuscles": [
+        "supraspinatus",
+        "upper_trapezius"
+      ],
+      "reviewStatus": "needs_confirmation",
+      "notes": "Verify upper-arm position and whether 90 degrees refers to elbow flexion.",
+      "aliases": []
+    },
+    {
+      "id": "front_to_lateral_raise_hold",
+      "name": "Dumbbell Front-to-Lateral Raise with Hold",
+      "category": "shoulders",
+      "equipment": "dumbbell",
+      "loadMode": "external_kg",
+      "primaryMuscles": [
+        "anterior_deltoid",
+        "lateral_deltoid"
+      ],
+      "secondaryMuscles": [
+        "supraspinatus",
+        "upper_trapezius"
+      ],
+      "reviewStatus": "needs_confirmation",
+      "notes": "Composite movement, requires video/photo or technique confirmation.",
+      "aliases": []
+    },
+    {
+      "id": "biceps_curl",
+      "name": "Biceps Curl",
+      "category": "arms",
+      "equipment": "unspecified",
+      "loadMode": "external_kg",
+      "primaryMuscles": [
+        "biceps_brachii"
+      ],
+      "secondaryMuscles": [
+        "brachialis"
+      ],
+      "reviewStatus": "needs_confirmation",
+      "notes": "Specify dumbbell, barbell, EZ-bar or cable. Exercise-specific machine/implement ID needed.",
+      "aliases": []
+    },
+    {
+      "id": "single_arm_preacher_curl",
+      "name": "Single-Arm Preacher Curl",
+      "category": "arms",
+      "equipment": "dumbbell_and_bench",
+      "loadMode": "external_kg",
+      "primaryMuscles": [
+        "biceps_brachii"
+      ],
+      "secondaryMuscles": [
+        "brachialis"
+      ],
+      "reviewStatus": "needs_confirmation",
+      "notes": "Could be preacher curl or concentration curl; confirm bench/arm positioning.",
+      "aliases": []
+    },
+    {
+      "id": "hammer_curl",
+      "name": "Hammer Curl",
+      "category": "arms",
+      "equipment": "dumbbell",
+      "loadMode": "external_kg",
+      "primaryMuscles": [
+        "brachialis",
+        "brachioradialis"
+      ],
+      "secondaryMuscles": [
+        "biceps_brachii"
+      ],
+      "reviewStatus": "provisional_muscle_mapping",
+      "notes": "",
+      "aliases": []
+    },
+    {
+      "id": "wrist_curl_with_finger_roll",
+      "name": "Seated Palms-Up Wrist Curl with Finger Roll",
+      "category": "forearms",
+      "equipment": "dumbbell_or_barbell",
+      "loadMode": "external_kg",
+      "primaryMuscles": [
+        "wrist_flexors"
+      ],
+      "secondaryMuscles": [
+        "finger_flexors"
+      ],
+      "reviewStatus": "needs_confirmation",
+      "notes": "Forearms supported, palms up, weight rolled toward fingers before wrist flexion.",
+      "aliases": []
+    },
+    {
+      "id": "reverse_wrist_curl",
+      "name": "Seated Palms-Down Reverse Wrist Curl",
+      "category": "forearms",
+      "equipment": "dumbbell_or_barbell",
+      "loadMode": "external_kg",
+      "primaryMuscles": [
+        "wrist_extensors"
+      ],
+      "secondaryMuscles": [
+        "brachioradialis"
+      ],
+      "reviewStatus": "provisional_muscle_mapping",
+      "notes": "",
+      "aliases": []
+    },
+    {
+      "id": "cable_triceps_pushdown",
+      "name": "Cable Triceps Pushdown",
+      "category": "arms",
+      "equipment": "cable_machine",
+      "loadMode": "machine_kg_or_level",
+      "primaryMuscles": [
+        "triceps_brachii"
+      ],
+      "secondaryMuscles": [
+        "anconeus"
+      ],
+      "reviewStatus": "needs_confirmation",
+      "notes": "Specify handle and whether machine uses kg or levels.",
+      "aliases": []
+    },
+    {
+      "id": "dumbbell_overhead_triceps_extension",
+      "name": "Dumbbell Overhead Triceps Extension",
+      "category": "arms",
+      "equipment": "dumbbell",
+      "loadMode": "external_kg",
+      "primaryMuscles": [
+        "triceps_brachii"
+      ],
+      "secondaryMuscles": [
+        "anconeus"
+      ],
+      "reviewStatus": "needs_confirmation",
+      "notes": "Single arm vs both arms/one dumbbell needs confirmation; long head emphasis is approximate.",
+      "aliases": []
+    },
+    {
+      "id": "lying_dumbbell_triceps_extension",
+      "name": "Lying Dumbbell Triceps Extension (Skull Crusher)",
+      "category": "arms",
+      "equipment": "dumbbell",
+      "loadMode": "external_kg",
+      "primaryMuscles": [
+        "triceps_brachii"
+      ],
+      "secondaryMuscles": [
+        "anconeus"
+      ],
+      "reviewStatus": "needs_confirmation",
+      "notes": "Verify elbow movement and whether extension is toward forehead or behind head.",
+      "aliases": []
+    },
+    {
+      "id": "chin_up_supinated",
+      "name": "Supinated-Grip Chin-Up",
+      "category": "back",
+      "equipment": "pull_up_bar",
+      "loadMode": "bodyweight_or_assisted",
+      "primaryMuscles": [
+        "latissimus_dorsi"
+      ],
+      "secondaryMuscles": [
+        "biceps_brachii",
+        "brachialis",
+        "pectoralis_major",
+        "lower_trapezius"
+      ],
+      "reviewStatus": "provisional_muscle_mapping",
+      "notes": "",
+      "aliases": []
+    },
+    {
+      "id": "pull_up_pronated",
+      "name": "Pronated-Grip Pull-Up",
+      "category": "back",
+      "equipment": "pull_up_bar",
+      "loadMode": "bodyweight_or_assisted",
+      "primaryMuscles": [
+        "latissimus_dorsi"
+      ],
+      "secondaryMuscles": [
+        "teres_major",
+        "brachialis",
+        "biceps_brachii",
+        "lower_trapezius"
+      ],
+      "reviewStatus": "provisional_muscle_mapping",
+      "notes": "",
+      "aliases": []
+    },
+    {
+      "id": "landmine_t_bar_row",
+      "name": "Landmine (T-Bar) Row",
+      "category": "back",
+      "equipment": "landmine_barbell",
+      "loadMode": "external_kg",
+      "primaryMuscles": [
+        "latissimus_dorsi",
+        "rhomboids",
+        "middle_trapezius"
+      ],
+      "secondaryMuscles": [
+        "posterior_deltoid",
+        "biceps_brachii",
+        "erector_spinae"
+      ],
+      "reviewStatus": "needs_confirmation",
+      "notes": "Confirm landmine setup and whether row is chest-supported or unsupported.",
+      "aliases": []
+    },
+    {
+      "id": "seated_cable_row",
+      "name": "Seated Cable Row",
+      "category": "back",
+      "equipment": "cable_machine",
+      "loadMode": "machine_kg_or_level",
+      "primaryMuscles": [
+        "latissimus_dorsi",
+        "rhomboids",
+        "middle_trapezius"
+      ],
+      "secondaryMuscles": [
+        "biceps_brachii",
+        "posterior_deltoid"
+      ],
+      "reviewStatus": "needs_confirmation",
+      "notes": "Specify grip and resistance units.",
+      "aliases": []
+    },
+    {
+      "id": "wide_grip_lat_pulldown",
+      "name": "Wide-Grip Pronated Lat Pulldown",
+      "category": "back",
+      "equipment": "lat_pulldown_machine",
+      "loadMode": "machine_kg_or_level",
+      "primaryMuscles": [
+        "latissimus_dorsi"
+      ],
+      "secondaryMuscles": [
+        "teres_major",
+        "brachialis",
+        "biceps_brachii",
+        "lower_trapezius"
+      ],
+      "reviewStatus": "provisional_muscle_mapping",
+      "notes": "",
+      "aliases": []
+    },
+    {
+      "id": "supinated_lat_pulldown",
+      "name": "Supinated-Grip Lat Pulldown",
+      "category": "back",
+      "equipment": "lat_pulldown_machine",
+      "loadMode": "machine_kg_or_level",
+      "primaryMuscles": [
+        "latissimus_dorsi"
+      ],
+      "secondaryMuscles": [
+        "biceps_brachii",
+        "brachialis",
+        "teres_major"
+      ],
+      "reviewStatus": "provisional_muscle_mapping",
+      "notes": "",
+      "aliases": []
+    },
+    {
+      "id": "leg_press",
+      "name": "Leg Press",
+      "category": "legs",
+      "equipment": "leg_press_machine",
+      "loadMode": "machine_kg_or_level",
+      "primaryMuscles": [
+        "quadriceps"
+      ],
+      "secondaryMuscles": [
+        "gluteus_maximus",
+        "adductor_magnus"
+      ],
+      "reviewStatus": "needs_confirmation",
+      "notes": "Sled vs selectorized leg press, plate weight, and sled effective load vary by machine.",
+      "aliases": []
+    },
+    {
+      "id": "squat",
+      "name": "Squat",
+      "category": "legs",
+      "equipment": "unspecified",
+      "loadMode": "bodyweight_or_external",
+      "primaryMuscles": [
+        "quadriceps",
+        "gluteus_maximus"
+      ],
+      "secondaryMuscles": [
+        "adductor_magnus",
+        "erector_spinae",
+        "core_stabilizers"
+      ],
+      "reviewStatus": "needs_confirmation",
+      "notes": "Specify barbell/back/front/goblet/bodyweight variation.",
+      "aliases": []
+    },
+    {
+      "id": "seated_leg_curl",
+      "name": "Seated Leg Curl",
+      "category": "legs",
+      "equipment": "selectorized_machine",
+      "loadMode": "machine_kg_or_level",
+      "primaryMuscles": [
+        "hamstrings"
+      ],
+      "secondaryMuscles": [
+        "gastrocnemius"
+      ],
+      "reviewStatus": "provisional_muscle_mapping",
+      "notes": "",
+      "aliases": []
+    },
+    {
+      "id": "lying_leg_curl",
+      "name": "Lying (Prone) Leg Curl",
+      "category": "legs",
+      "equipment": "selectorized_machine",
+      "loadMode": "machine_kg_or_level",
+      "primaryMuscles": [
+        "hamstrings"
+      ],
+      "secondaryMuscles": [
+        "gastrocnemius"
+      ],
+      "reviewStatus": "provisional_muscle_mapping",
+      "notes": "",
+      "aliases": []
+    },
+    {
+      "id": "single_leg_calf_raise",
+      "name": "Single-Leg Calf Raise",
+      "category": "legs",
+      "equipment": "bodyweight_or_dumbbell",
+      "loadMode": "bodyweight_or_external",
+      "primaryMuscles": [
+        "gastrocnemius",
+        "soleus"
+      ],
+      "secondaryMuscles": [
+        "ankle_stabilizers"
+      ],
+      "reviewStatus": "needs_confirmation",
+      "notes": "Record working leg; standing vs seated must be confirmed.",
+      "aliases": []
+    },
+    {
+      "id": "bilateral_weighted_calf_raise",
+      "name": "Weighted Bilateral Calf Raise",
+      "category": "legs",
+      "equipment": "unspecified",
+      "loadMode": "external_kg",
+      "primaryMuscles": [
+        "gastrocnemius",
+        "soleus"
+      ],
+      "secondaryMuscles": [
+        "ankle_stabilizers"
+      ],
+      "reviewStatus": "needs_confirmation",
+      "notes": "Confirm standing or seated; different knee angles bias gastrocnemius vs soleus.",
+      "aliases": []
+    },
+    {
+      "id": "incline_treadmill_walk",
+      "name": "Incline Treadmill Walk",
+      "category": "cardio",
+      "equipment": "treadmill",
+      "loadMode": "speed_grade_duration",
+      "primaryMuscles": [
+        "cardiorespiratory_system"
+      ],
+      "secondaryMuscles": [
+        "quadriceps",
+        "gluteus_maximus",
+        "gastrocnemius",
+        "soleus"
+      ],
+      "reviewStatus": "needs_confirmation",
+      "notes": "Cardio rather than strength exercise; speed (km/h), grade (%), duration (min), body mass (kg).",
+      "aliases": []
+    }
+  ]
+}

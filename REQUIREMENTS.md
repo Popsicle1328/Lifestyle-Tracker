@@ -1,37 +1,38 @@
-# Daymark Requirements and Decision Register — v0.2
+# Daymark Requirements Register — v0.2
 
-## Confirmed
+## Confirmed / implemented
 
-- Free, Android-first, installable PWA, usable in desktop browser; static GitHub Pages + local IndexedDB; offline capabilities; backup/restore.
-- Modular architecture; Sleep module active; Nutrition, Cardio, Workout, Body Weight locked until specified.
-- One-tap current-time bedtime / wake-up capture, plus manual backdating/editing.
-- Track **time spent in bed**, not actual measured sleep.
-- 14-day chart: time in bed and adjusted duration (subtract 45 min). Configurable colour gradient: 8–9h green, 7h15 yellow, below yellow becomes red; above 9h transitions to yellow, above 10h red.
-- Second chart bedtime and wake-up, shade interval, view historical trends / horizontal scroll.
-- Mark notable fluctuations and above-/below-ideal nights; count outside-ideal completed nights in past 30 days.
-- Assign night to intended **bedtime day** even when bedtime occurs after midnight; allow date override to avoid duplicate logical nights.
-- Data should be structured, preserved and extractable for later analysis.
+- Local-first React/Vite TypeScript PWA; GitHub Pages; IndexedDB/Dexie; user-controlled backup.
+- Sleep bedtime/wake one-tap timestamps; manual logging; one assigned sleep date with support for after-midnight bedtime; editable sleep history.
+- Sleep duration is actual time in bed, adjusted sleep estimate uses 45-minute configurable deduction. Two dynamic, scrollable 14-day graphs; 30-day missed-target snapshot; sample data for testing.
+- Workout Sessions: start, pause, resume, finish; active duration excluding pauses; main dashboard workout days and duration.
+- Exercise catalog initial 34 strength/bodyweight variants + 1 incline treadmill activity; provisional primary/secondary muscle mapping.
+- Logging: reps, explicit resistance unit and value, completed-set timestamp; set editing, delete; effort marker; superset group; drop stages.
+- Workout page: session, history, basic progress trends, muscle map, library, incline treadmill, calories estimate.
+- Seeded demo records clearly distinguished from personal data, removable by user.
+- Data exports: JSON schema v2 and CSV for both trackers. v1 JSON restore supported.
 
-## Provisional implementation choices to confirm
+## Provisional implementation choices (must be reviewed)
 
-- 06:00 local clock time is the default cutoff to automatically assign after-midnight bedtime to previous sleep date. User can change cutoff and override assigned sleep date.
-- Single overnight interval per assigned date (database unique constraint). Multiple separate naps/segments aren't supported yet.
-- 45 min adjustment is clamped to zero for very short durations.
-- Colour interpolation points are red at 6h30, yellow at 7h15, green at 8h; green at 9h, yellow at 9h30, red at 10h. The red-at-6h30 boundary is a provisional threshold due to underspecified below-7h15 progression. All thresholds configurable.
-- Fluctuation means absolute change >= 90 minutes in adjusted duration between consecutive *recorded* nights. Configurable.
-- Missed target means completed records with adjusted duration outside [8h, 9h]. Missing and incomplete nights are tracked separately and not called missed.
-- Retrospective stats use currently selected settings; raw timestamp records are never modified by a settings change.
-- An unclosed bedtime record remains active until the user logs wake-up or edits it manually.
+- App stores **completion timestamps** and offers completion-to-completion approximate intervals, not precise rest.
+- Workout calorie estimate: 3.5 MET gross kcal on resistance-session active minutes minus treadmill intervals; treadmill estimate uses ACSM walking relationship. No implicit user body mass.
+- Training frequency counts distinct days with at least one primary-muscle working set. Secondary-only days shown separately. Warm-up sets excluded.
+- Exercise progress comparisons group by exercise and load unit. Apparent decline is not classified without comparable-session rules.
+- Muscle SVG is schematic, not an anatomical measurement or precise muscle-head activation model.
 
-## Unresolved
+## Still needing user decisions
 
-- What exact short-sleep duration becomes fully red (below 7h15)?
-- Should the 45 minutes be a uniform deduction or separate fall-asleep / wakeup durations?
-- How should multiple periods within a sleep date be handled, if desired?
-- Should graph abnormalities use time-shift, duration, weekday/weekend baselines, or all three?
-- Should target preferences be versioned per day for historical analysis?
-- Dark theme specifics; ability to reorder dashboard widgets.
+1. Dumbbell kg-each vs combined, barbell convention, machine identification and increment availability.
+2. Repetition target ranges and load progression triggers per exercise/muscle.
+3. Plateau and regression detection thresholds; exercise-order/fatigue notes and superset comparison logic.
+4. Set start/done workflow for accurate rest; minimum taps during exercise.
+5. Gross versus net calories and recovery interval treatment.
+6. Final confirmation of uncertain exercise names, and fine head-level muscle emphasis.
+7. Whether multiple workout sessions in one calendar day require grouping in dashboard.
 
-## Data design
+## Data integrity
 
-One sleep row: UUID `id`, date `sleepDate`, ISO `bedtime`, ISO nullable `wakeup`, created/updated timestamps, entry source for bedtime and wake-up, optional notes. Unique index on sleepDate. Settings stored independently. Calculated durations/colours/statistics are recomputed, not saved to record rows. Versioned JSON backup schema 1; CSV export for standalone analysis. 
+- All data stored on device; no automatic cross-device sync.
+- Demo seeds on first open of v0.2, only for dates without a pre-existing sleep record or workout session; one-time appMeta marker prevents repeated insertion.
+- All demo records carry `isDemo`. Removal deletes only records flagged as demo; user edits can clear `isDemo` on sleep records to retain them as personal data.
+- V1 → V2 Dexie schema migration keeps the same IndexedDB database name. Backup v2 can restore all tables, and v1 backup restores sleep and resets workout tables after confirmation.
