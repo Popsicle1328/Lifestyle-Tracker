@@ -76,10 +76,10 @@ export async function restoreBackup(input:unknown){
  if(new Set(parsed.sleep.map(r=>r.sleepDate)).size!==parsed.sleep.length)throw Error('Backup has duplicate sleep dates.');
  if(new Set(parsed.sleep.map(r=>r.id)).size!==parsed.sleep.length)throw Error('Backup has duplicate sleep identifiers.');
  for(const r of parsed.sleep)if(r.wakeup)checkInterval(r.bedtime,r.wakeup);
- const sessions=parsed.schemaVersion>=2?parsed.workoutSessions:[];
- const sets=parsed.schemaVersion>=2?parsed.workoutSets:[];
- const cardio=parsed.schemaVersion>=2?parsed.cardioIntervals:[];
- const exercises=parsed.schemaVersion>=2?parsed.exercises:initialExercises;
+ const sessions=parsed.schemaVersion===1?[]:parsed.workoutSessions;
+ const sets=parsed.schemaVersion===1?[]:parsed.workoutSets;
+ const cardio=parsed.schemaVersion===1?[]:parsed.cardioIntervals;
+ const exercises=parsed.schemaVersion===1?initialExercises:parsed.exercises;
  const foods=parsed.schemaVersion===3?parsed.foods:[];const foodLogs=parsed.schemaVersion===3?parsed.foodLogs:[];const waterLogs=parsed.schemaVersion===3?parsed.waterLogs:[];const nutritionPrefs=parsed.schemaVersion===3?parsed.nutritionPrefs:DEFAULT_NUTRITION_PREFS;
  const unique=(xs:string[])=>new Set(xs).size===xs.length;
  if(![sessions.map(s=>s.id),sets.map(s=>s.id),cardio.map(s=>s.id),exercises.map(s=>s.id)].every(unique))throw Error('Backup contains duplicate identifiers.');
