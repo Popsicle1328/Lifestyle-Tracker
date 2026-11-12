@@ -1,38 +1,56 @@
-# Daymark Requirements Register — v0.2
+# Daymark consolidated requirements and decision register (0.3)
 
-## Confirmed / implemented
+## Confirmed product philosophy
 
-- Local-first React/Vite TypeScript PWA; GitHub Pages; IndexedDB/Dexie; user-controlled backup.
-- Sleep bedtime/wake one-tap timestamps; manual logging; one assigned sleep date with support for after-midnight bedtime; editable sleep history.
-- Sleep duration is actual time in bed, adjusted sleep estimate uses 45-minute configurable deduction. Two dynamic, scrollable 14-day graphs; 30-day missed-target snapshot; sample data for testing.
-- Workout Sessions: start, pause, resume, finish; active duration excluding pauses; main dashboard workout days and duration.
-- Exercise catalog initial 34 strength/bodyweight variants + 1 incline treadmill activity; provisional primary/secondary muscle mapping.
-- Logging: reps, explicit resistance unit and value, completed-set timestamp; set editing, delete; effort marker; superset group; drop stages.
-- Workout page: session, history, basic progress trends, muscle map, library, incline treadmill, calories estimate.
-- Seeded demo records clearly distinguished from personal data, removable by user.
-- Data exports: JSON schema v2 and CSV for both trackers. v1 JSON restore supported.
+- No paid services, backend, subscriptions, or mandatory cloud database.
+- Local-first IndexedDB. User owns JSON backup/restore and CSV exports.
+- User chooses the formulas and meaning of records, especially where quantities are estimated.
+- Android-first installable PWA, desktop support, offline once cached, update after GitHub deployment.
 
-## Provisional implementation choices (must be reviewed)
+## Sleep
 
-- App stores **completion timestamps** and offers completion-to-completion approximate intervals, not precise rest.
-- Workout calorie estimate: 3.5 MET gross kcal on resistance-session active minutes minus treadmill intervals; treadmill estimate uses ACSM walking relationship. No implicit user body mass.
-- Training frequency counts distinct days with at least one primary-muscle working set. Secondary-only days shown separately. Warm-up sets excluded.
-- Exercise progress comparisons group by exercise and load unit. Apparent decline is not classified without comparable-session rules.
-- Muscle SVG is schematic, not an anatomical measurement or precise muscle-head activation model.
+- One tap bedtime, one tap wake; manual editing and one *assigned night* date (with after-midnight option).
+- Show time in bed; adjusted duration = time in bed minus user-chosen default of 45 minutes, not actual measured sleep.
+- Ideal adjusted 8-9 h, dynamic red/yellow/green thresholds (existing configurable preferences).
+- Two 14-day and scrollable historical graphs; hover must show both clock times.
+- Compare bedtime/wake-up shifts >= user-chosen threshold (currently 90 minutes) against the *immediately previous consecutive night*.
+- Otherwise compare adjusted duration with rolling prior-14-night median, requiring five records, to reduce sensitivity to one unusual night.
+- 30-day count outside ideal range, missing/unrecorded distinct.
 
-## Still needing user decisions
+## Workout
 
-1. Dumbbell kg-each vs combined, barbell convention, machine identification and increment availability.
-2. Repetition target ranges and load progression triggers per exercise/muscle.
-3. Plateau and regression detection thresholds; exercise-order/fatigue notes and superset comparison logic.
-4. Set start/done workflow for accurate rest; minimum taps during exercise.
-5. Gross versus net calories and recovery interval treatment.
-6. Final confirmation of uncertain exercise names, and fine head-level muscle emphasis.
-7. Whether multiple workout sessions in one calendar day require grouping in dashboard.
+- One exercise catalog with primary/secondary muscle classification, load units, timestamps, sets, reps, drop sets and superset groups.
+- Session start/pause/resume/finish and approximate rest intervals.
+- Filter exercise options by muscle region and Push/Pull/Legs in logging and progress.
+- Suggestions rank time since last primary-muscle training plus PPL rotation; after a >=7-day gap recommend *one* manageable split, not a catch-up workout.
+- The training recommendation is a user-adjustable heuristic, not a physiological readiness measurement.
+- Trend context considers exercise order, supersets, drop sets and shorter rest. No automatic precise next-weight prescription until increments and rep goals are confirmed.
+- Interactive front/back muscle region map. Clicking region shows last three completed sessions with exercises sorted and available exercise options.
+- Workout history summary and detailed log show color-coded primary muscles.
+- Incline treadmill logging only inside Workout; no second Cardio module.
 
-## Data integrity
+## Nutrition and lifestyle
 
-- All data stored on device; no automatic cross-device sync.
-- Demo seeds on first open of v0.2, only for dates without a pre-existing sleep record or workout session; one-time appMeta marker prevents repeated insertion.
-- All demo records carry `isDemo`. Removal deletes only records flagged as demo; user edits can clear `isDemo` on sleep records to retain them as personal data.
-- V1 → V2 Dexie schema migration keeps the same IndexedDB database name. Backup v2 can restore all tables, and v1 backup restores sleep and resets workout tables after confirmation.
+- Foods are defined by custom serving size, serving unit and kcal/protein/carbs/fat per serving.
+- Portion-based logs preserve *at-time* nutritional facts separately from editable food library.
+- Water entry: quick add, custom amount and editable goal.
+- Today combined sleep, protein, water, workout minutes, approximate exercise calories, 3/7/30 day statistics.
+- Current weight reference 60 kg, protein target 120 g/day (user supplied). Starting drinking-water target 2100 mL/day is an editable *35 mL/kg heuristic*, NOT a creatine-specific prescription.
+- Calorie-intake goal left unset by request; exercise calorie-burn and workout frequency goal available but unset until user specifies values.
+- Body Weight and separate Cardio removed from main navigation.
+- Dark mode available.
+- Study and 24-hour lifestyle time tracking reserved for later specification.
+
+## Still to confirm
+
+- Protein target duration/change history when weight changes; whether drinking water excludes or includes all beverages; hydration goal adaptation for workouts and climate.
+- Bodyweight conventions for dumbbell pair and barbell, machine level increments, rep-range and progression thresholds, muscle-specific stimulus weighting, actual planned PPL split, and rest-timing precision.
+- Exercise recommendation recovery periods and whether user wants recommendations based on RPE/RIR and muscle soreness.
+- 24-hour tracking categories, time-boundary conventions, sleep categorisation and study-session time tracking.
+- Detailed nutrition database portion duplication, user-defined food groups, meal names and editing historical logged nutrition values.
+
+## Data safety
+
+- Database name unchanged, migration v2 -> v3 adds food/water/preference tables, no destructive old-table changes.
+- Demo records stay labelled and separately removable.
+- GitHub hosts code only. Personal data is device-local and never automatically synced.

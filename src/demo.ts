@@ -2,11 +2,19 @@ import {addDays,format,subDays} from 'date-fns';
 import type {SleepRecord,WorkoutSession,WorkoutSet,CardioInterval,ExerciseDefinition,LoadUnit} from './models';
 import raw from './exercises.seed.json';
 
-export const initialExercises:ExerciseDefinition[]=raw.exercises.map(e=>({
+export const originalExercises:ExerciseDefinition[]=raw.exercises.map(e=>({
  id:e.id,name:e.name,category:e.category,equipment:e.equipment,loadMode:e.loadMode,
  primaryMuscles:e.primaryMuscles,secondaryMuscles:e.secondaryMuscles,reviewStatus:e.reviewStatus,
  notes:e.notes,aliases:e.aliases,isCustom:false
 }));
+// Additional optional core ideas, not part of the original user-supplied schedule.
+const optionalCore:ExerciseDefinition[]=[
+ {id:'suggested_plank',name:'Forearm Plank (suggested)',category:'core',equipment:'bodyweight',loadMode:'bodyweight',primaryMuscles:['core_stabilizers','rectus_abdominis'],secondaryMuscles:['obliques','gluteus_maximus'],reviewStatus:'suggestion: not in user routine'},
+ {id:'suggested_dead_bug',name:'Dead Bug (suggested)',category:'core',equipment:'bodyweight',loadMode:'bodyweight',primaryMuscles:['core_stabilizers','rectus_abdominis'],secondaryMuscles:['obliques'],reviewStatus:'suggestion: not in user routine'},
+ {id:'suggested_hanging_knee_raise',name:'Hanging Knee Raise (suggested)',category:'core',equipment:'pull_up_bar',loadMode:'bodyweight',primaryMuscles:['rectus_abdominis'],secondaryMuscles:['obliques'],reviewStatus:'suggestion: not in user routine'},
+ {id:'suggested_cable_crunch',name:'Kneeling Cable Crunch (suggested)',category:'core',equipment:'cable_machine',loadMode:'machine_level',primaryMuscles:['rectus_abdominis'],secondaryMuscles:['obliques'],reviewStatus:'suggestion: not in user routine'},
+];
+export const initialExercises:ExerciseDefinition[]=[...originalExercises,...optionalCore];
 const date=(d:Date)=>format(d,'yyyy-MM-dd');
 const at=(d:Date,h:number,m:number)=>{const x=new Date(d);x.setHours(h,m,0,0);return x.toISOString()};
 export function createDemoData(now=new Date()){

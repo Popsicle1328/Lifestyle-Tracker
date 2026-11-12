@@ -14,3 +14,10 @@ export interface DropStage {weight:number;reps:number;unit:LoadUnit;at:string}
 export interface WorkoutSet {id:string;sessionId:string;exerciseId:string;sequence:number;weight:number|null;reps:number;unit:LoadUnit;completedAt:string;startedAt:string|null;setKind:'working'|'warmup'|'dropset';dropStages:DropStage[];supersetGroupId:string|null;effort:'normal'|'near_failure'|'failure'|null;notes:string;isDemo?:boolean}
 export interface CardioInterval {id:string;sessionId:string;kind:'incline_treadmill';startedAt:string;endedAt:string;durationMinutes:number;speedKmh:number;inclinePercent:number;bodyWeightKg:number|null;isDemo?:boolean}
 export interface AppMeta {id:string;value:string}
+// Nutrition entries snapshot the original nutrient facts, preserving historical totals when foods are edited.
+export interface FoodDefinition {id:string;name:string;portionAmount:number;portionUnit:string;calories:number;protein:number;carbs:number;fat:number;createdAt:string;updatedAt:string;isArchived?:boolean}
+export interface FoodSnapshot {name:string;portionAmount:number;portionUnit:string;calories:number;protein:number;carbs:number;fat:number}
+export interface FoodLog {id:string;date:string;foodId:string;portions:number;foodSnapshot:FoodSnapshot;at:string;note:string}
+export interface WaterLog {id:string;date:string;amountMl:number;at:string}
+export interface NutritionPrefs {id:'main';calorieTarget:number|null;proteinTarget:number|null;carbsTarget:number|null;fatTarget:number|null;waterTargetMl:number|null;bodyWeightKg?:number|null;workoutDaysPerWeek?:number|null;calorieBurnTarget?:number|null}
+export const DEFAULT_NUTRITION_PREFS:NutritionPrefs={id:'main',calorieTarget:null,proteinTarget:120,carbsTarget:null,fatTarget:null,waterTargetMl:2100,bodyWeightKg:60,workoutDaysPerWeek:null,calorieBurnTarget:null};

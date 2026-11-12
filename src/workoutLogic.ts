@@ -49,13 +49,22 @@ export function exerciseTrend(sets:WorkoutSet[],sessions:WorkoutSession[],id:str
  }
  return [...byDate.values()].sort((a,b)=>a.date.localeCompare(b.date));
 }
-export function contextMessage(current:WorkoutSet[],previous:WorkoutSet[]):string {
- if(!previous.length||!current.length)return 'More comparable sessions needed';
- if(current.some(s=>s.supersetGroupId))return 'Superset context — compare separately';
- if(current.some(s=>s.setKind==='dropset'))return 'Drop set — compare separately';
- const a=current[0];const b=previous[0];
- if(a.unit!==b.unit)return 'Load units changed — not comparable';
- if(a.reps<b.reps)return 'Lower reps observed; check exercise order, recovery and rest before interpreting';
- if(a.reps>b.reps)return 'Rep improvement at comparable load';
- return 'Stable performance; progression rules not yet configured';
+export function contextMessage(current:WorkoutSet[],previous:WorkoutSet[],currentSessionSets:WorkoutSet[]=current,previousSessionSets:WorkoutSet[]=previous):string {
+ if(!previous.length||!current.length)return 'More comparable sessions are needed';
+ if(current.some(s=>s.supersetGroupId))return 'Superset session: lower reps are not treated as a strength decline';
+ if(current.some(s=>s.setKind==='dropset'))return 'Drop-set context: review separately from straight working sets';
+ const ordered=(list:WorkoutSet[])=>[...list].sort((a,b)=>a.completedAt.localeCompare(b.completedAt));
+ const uniqueOrder=(all:WorkoutSet[])=>[...new Set(ordered(all).map(x=>x.exerciseId))];
+ const first=ordered(current)[0],old=ordered(previous)[0];
+ if(first.unit!==old.unit)return 'Load unit changed: comparison is not valid';
+ if(first.weight!==old.weight)return 'Resistance changed: compare volume and reps before interpreting strength';
+ const newPosition=uniqueOrder(currentSessionSets).indexOf(first.exerciseId);
+ const oldPosition=uniqueOrder(previousSessionSets).indexOf(old.exerciseId);
+ if(first.reps<old.reps && newPosition>oldPosition && oldPosition>=0)return 'Later exercise order: possible accumulated fatigue, not a confirmed performance decline';
+ const typicalRest=(list:WorkoutSet[])=>{const sorted=ordered(list);const intervals=sorted.slice(1).map((x,i)=>restApproxMinutes(sorted[i],x)).filter((x):x is number=>x!==null);return intervals.length?intervals.reduce((a,b)=>a+b,0)/intervals.length:null};
+ const newRest=typicalRest(current),oldRest=typicalRest(previous);
+ if(first.reps<old.reps&&newRest!==null&&oldRest!==null&&newRest<oldRest*.75)return 'Shorter rest between completed-set taps: reps may reflect reduced recovery';
+ if(first.reps<old.reps)return 'Single-session rep drop: track another comparable session before flagging a decline';
+ if(first.reps>old.reps)return 'Rep improvement at a comparable load and set context';
+ return 'Stable logged performance: progression thresholds still need your approval';
 }
