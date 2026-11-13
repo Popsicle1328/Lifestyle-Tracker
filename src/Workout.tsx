@@ -35,12 +35,12 @@ export default function WorkoutTracker({notify}:{notify:(message:string)=>void})
  const [selectedExercise,setSelectedExercise]=useState('flat_dumbbell_bench_press');
  const [logExercise,setLogExercise]=useState('flat_dumbbell_bench_press');
  const exercise=exercises.find(e=>e.id===logExercise);
- const [supersetWith,setSupersetWith]=useState('');
  const [loadUnit,setLoadUnit]=useState<LoadUnit|''>('');const [weight,setWeight]=useState('5');const [reps,setReps]=useState('10');
  const [setKind,setSetKind]=useState<'working'|'warmup'|'dropset'>('working');
  const [dropWeight,setDropWeight]=useState('2.5');const [dropReps,setDropReps]=useState('5');
  const [effort,setEffort]=useState<'normal'|'near_failure'|'failure'>('normal');
  const [supersetWith,setSupersetWith]=useState('');const [editingSetId,setEditingSetId]=useState<string|null>(null);
+ const supersetPartner=exercises.find(e=>e.id===supersetWith);
  const [supersetWeight,setSupersetWeight]=useState('5');const [supersetReps,setSupersetReps]=useState('10');const [supersetUnit,setSupersetUnit]=useState<LoadUnit|''>('');
  const [historyDraft,setHistoryDraft]=useState<HistoryDraft|null>(null);const [historyEditingId,setHistoryEditingId]=useState<string|null>(null);
  const [bodyWeight,setBodyWeight]=useState<string|null>(null);
