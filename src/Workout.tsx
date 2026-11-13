@@ -35,7 +35,7 @@ export default function WorkoutTracker({notify}:{notify:(message:string)=>void})
  const [selectedExercise,setSelectedExercise]=useState('flat_dumbbell_bench_press');
  const [logExercise,setLogExercise]=useState('flat_dumbbell_bench_press');
  const exercise=exercises.find(e=>e.id===logExercise);
- const supersetPartner=exercises.find(e=>e.id===supersetWith);
+ const [supersetWith,setSupersetWith]=useState('');
  const [loadUnit,setLoadUnit]=useState<LoadUnit|''>('');const [weight,setWeight]=useState('5');const [reps,setReps]=useState('10');
  const [setKind,setSetKind]=useState<'working'|'warmup'|'dropset'>('working');
  const [dropWeight,setDropWeight]=useState('2.5');const [dropReps,setDropReps]=useState('5');
