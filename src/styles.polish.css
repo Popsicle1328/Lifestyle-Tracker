@@ -1,0 +1,221 @@
+/* Daymark 0.4 | Unified Sleep-inspired design system and full dark-surface audit.
+   Workouts use lavender/blue; nutrition uses peach/blue; cards mirror Sleep. */
+:root{
+ --dm-page:#f8f9fd;--dm-surface:#ffffff;--dm-elevated:#ffffff;--dm-soft:#f6f4ff;
+ --dm-ink:#2c2d4b;--dm-sub:#6c7188;--dm-muted:#878ba3;--dm-line:#e6e6f1;
+ --dm-purple:#725fc9;--dm-purple-soft:#f0edff;--dm-peach:#ca7f76;--dm-peach-soft:#fff0e9;
+ --dm-blue:#557eb5;--dm-focus:#786ae4;--dm-input:#fff;--dm-tooltip:#fff;
+ --workout-chart:#8472d6;--nutrition-protein:#a37ada;--nutrition-water:#6799d6;
+}
+.workout-page{--module-accent:var(--dm-purple);--module-soft:var(--dm-purple-soft)}
+.nutrition-page{--module-accent:var(--dm-peach);--module-soft:var(--dm-peach-soft)}
+/* Consistent surface and typography rhythm across modules. */
+.workout-page,.nutrition-page,.today-page{color:var(--dm-ink)}
+.workout-page .page-heading,.nutrition-page .page-heading{margin-bottom:24px}
+.workout-page .panel,.nutrition-page .panel,.today-page .panel,
+.workout-mini-stat,.today-metric,.graph-card,.stat{border:1px solid var(--dm-line);background:var(--dm-surface);box-shadow:0 8px 24px rgba(73,59,112,.035);border-radius:17px}
+.workout-page .page-heading h1,.nutrition-page .page-heading h1{color:var(--dm-ink)}
+.workout-page .page-heading p,.nutrition-page .page-heading p,.workout-page .section-head p,.nutrition-page .section-head p{color:var(--dm-sub);font-size:12px}
+.workout-page .eyebrow,.nutrition-page .eyebrow{color:var(--module-accent)}
+.workout-chip{background:var(--module-soft,#f0edff);color:var(--module-accent,#725fc9);border-color:var(--dm-line)}
+.workout-tabs button.selected{background:var(--module-accent,#725fc9);color:#fff;border-color:var(--module-accent,#725fc9)}
+.workout-tabs button:not(.selected){background:var(--dm-surface);color:var(--dm-sub);border-color:var(--dm-line)}
+.workout-tabs button:hover:not(.selected),.history-card:hover,.library-item:hover{border-color:#c7c0e9}
+.action-primary{background:var(--module-accent,#725fc9);color:#fff;box-shadow:0 6px 16px rgba(105,84,159,.12);border:1px solid transparent}
+.action-primary:hover:not(:disabled){filter:brightness(1.06)}
+.action-outline,.workout-filter-bar,.workout-filter-bar select,.workout-input input,.workout-input select,.inline-add input,.goal-number,
+.theme-control,.header-theme{background:var(--dm-input);color:var(--dm-ink);border-color:var(--dm-line)}
+.workout-input,.workout-filter-bar label{color:var(--dm-sub);font-size:12px}
+.workout-input input,.workout-input select,.nutrition-food-editor input{min-height:42px;font-size:13px}
+.workout-mini-stat strong,.nutrition-stats strong,.session-clock,.today-metric strong{color:var(--dm-ink)}
+.workout-mini-stat svg{color:var(--module-accent)}
+.workout-mini-stat span,.workout-input>small,.micro-text,.focus-subtitle{color:var(--dm-sub)}
+/* Remove the old blanket green treatment from Workout. */
+.focus-panel{background:linear-gradient(115deg,#f9f7ff,#f5f5ff 65%,#fff4ed);border-color:#e3ddf4}
+.focus-panel .section-head h3,.focus-exercises button,.focus-extra{color:#6759a4}
+.focus-exercises button,.focus-muscle-rank button{background:#fff;border:1px solid #e7e2f2;color:#575575}
+.focus-extra{background:#f3edff;border:1px dashed #c6bbeb}
+.focus-circle{border-radius:10px}
+.workout-session-panel{background:linear-gradient(165deg,#fff,#fcfbff)}
+.workout-log-panel{background:#fff}
+.session-status.active{background:#e7f7ef;color:#26785c}
+.session-status.paused{background:#fff2de;color:#a76b31}
+.rest-chip{background:#f0eeff;color:#7064a9}
+.drop-stage{background:#f7f3ff;border:1px solid #e1daf3}
+.cardio-estimate{background:#fff2ea;border:1px solid #f0ded3;color:#965c4d}
+.analysis-note{background:#f3efff;color:#645b91;border-color:#dfd8f1}
+.analysis-note.muted,.session-detail-summary,.muscle-detail{background:#f8f7fc;color:#5c647e;border-color:#e9e5f2}
+.history-card.picked,.muscle-list button.picked{background:#f1edff;border-color:#c9c1eb}
+.library-item,.nutrition-food-editor,.nutrition-log:nth-child(odd),.muscle-history-day{background:#fcfbff;border-color:#e9e6f2}
+.library-category,.mini-title svg{color:var(--module-accent)}
+.nutrition-preview{background:#fff4ee;border:1px solid #f2e0d8}
+.nutrition-preview strong{color:#a5655c}
+.nutrition-preview span,.nutrition-preview small{color:#8d6c6a}
+.progress-track>span{background:#b082d8}
+.progress-track.water>span{background:#70a0db}
+.water-quick button{background:#edf4ff;color:#4672a5;border-color:#d1e1f8}
+.nutrition-food-line button:hover,.nutrition-log button:hover{background:#f2efff}
+.nutrition-food-line strong,.nutrition-library-top strong,.nutrition-list-title,.nutrition-log>span:first-child{color:var(--dm-ink)}
+.workout-filter-bar{background:#fff;border:1px solid var(--dm-line)}
+.workout-filter-bar select{background:#fbfaff}
+.theme-control,.header-theme{background:var(--dm-surface)}
+/* Exercise + nutrition category controls / manual history entries. */
+.superset-partner-card,.history-edit-card{border:1px solid #d6cbed;background:linear-gradient(140deg,#f6f1ff,#fbfaff);border-radius:15px;padding:17px;margin:15px 0}
+.superset-partner-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}
+.superset-partner-heading h4,.history-edit-card h4{font:750 15px Outfit,'DM Sans',sans-serif;margin:5px 0;color:#504a82}
+.superset-partner-card .workout-three,.history-edit-card .workout-three{margin:10px 0}
+.history-tools{display:flex;flex-wrap:wrap;align-items:end;gap:12px;margin:17px 0}
+.history-tools .workout-input{min-width:170px;margin:0}
+.history-tools .action-outline{min-height:42px}
+.history-edit-card .workout-input{margin-top:12px}
+.history-edit-card .action-primary{margin-top:15px}
+.history-set-title{display:flex;flex-direction:column;gap:4px;min-width:160px}
+.history-set-title small{color:var(--dm-muted)}
+.tinted-exercise{background:#fbfaff!important;border:1px solid var(--dm-line);border-left-width:4px!important;min-height:57px;gap:8px;flex-wrap:wrap}
+.tinted-exercise>span{color:var(--dm-ink)}
+.library-item .tiny-action{margin-top:9px;width:max-content;display:flex;gap:7px;align-items:center;color:#6e5eab}
+.library-add{background:linear-gradient(135deg,#fbfaff,#fff7f3);border:1px solid var(--dm-line);border-radius:15px;padding:20px;margin-top:22px}
+.library-add .section-head{margin-bottom:17px}
+.mapping-label{display:block;font-size:12px;color:var(--dm-ink);margin:17px 0 8px}
+.muscle-chip-picker,.nutrition-category-picker{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.muscle-chip-picker button,.nutrition-category-picker button{border:1px solid #dcd8ec;background:#fff;color:#67627c;padding:8px 11px;border-radius:999px;font-size:11px;font-weight:750}
+.muscle-chip-picker button.chosen,.nutrition-category-picker button.chosen{background:#e9e3ff;border-color:#aa9adf;color:#61519f}
+.muscle-chip-picker.secondary button.chosen{background:#ffece8;border-color:#e2aa9f;color:#9e5a55}
+.nutrition-category-picker{margin:5px 0 18px}.nutrition-category-picker>span{font-size:11px;color:var(--dm-sub)}
+.food-category-tags{display:flex;gap:5px;flex-wrap:wrap;margin:6px 0}.food-category-tags span,.log-food-categories{display:inline-block;background:#f0edff;color:#6d5faa;border-radius:6px;padding:3px 6px;font-size:10px;font-weight:700}
+.log-food-categories{margin-left:6px;background:#fff0e9;color:#a96a5c}
+/* Chart text and popovers should not inherit stale high-contrast colours. */
+.recharts-default-tooltip{border-radius:10px!important;box-shadow:0 10px 25px rgba(38,31,69,.12)!important}
+.recharts-tooltip-label,.recharts-tooltip-item{font-size:12px!important}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #9b8af0;outline-offset:2px}
+button:not(:disabled){transition:background-color .16s,border-color .16s,filter .16s}
+/* Dark mode: every surface, elevated subpanel, modal, graph popup, input and chip. */
+html[data-theme='dark']{
+ color-scheme:dark;--dm-page:#111725;--dm-surface:#1a2639;--dm-elevated:#223047;--dm-soft:#282b4a;
+ --dm-ink:#f3f1fd;--dm-sub:#c3c8dc;--dm-muted:#abb5ca;--dm-line:#39465e;
+ --dm-purple:#b7a5ff;--dm-purple-soft:#342e51;--dm-peach:#f1afa4;--dm-peach-soft:#453039;
+ --dm-blue:#94bff2;--dm-focus:#c2b5ff;--dm-input:#243249;--dm-tooltip:#26344d;
+ --graph-grid:#36445c;--workout-chart:#b7a5ff;--nutrition-protein:#bd9ce8;--nutrition-water:#8bb9ec;
+ background:var(--dm-page);color:var(--dm-ink)
+}
+html[data-theme='dark'] body,html[data-theme='dark'] .app-shell,html[data-theme='dark'] .main{background:var(--dm-page);color:var(--dm-ink)}
+html[data-theme='dark'] .sidebar,html[data-theme='dark'] .topbar{background:#161f30!important;border-color:var(--dm-line)!important}
+html[data-theme='dark'] .graph-card,html[data-theme='dark'] .stat,html[data-theme='dark'] .panel,
+html[data-theme='dark'] .workout-mini-stat,html[data-theme='dark'] .today-metric,html[data-theme='dark'] .modal,
+html[data-theme='dark'] .history-card,html[data-theme='dark'] .library-item,html[data-theme='dark'] .nutrition-food-line,
+html[data-theme='dark'] .nutrition-food-editor,html[data-theme='dark'] .workout-filter-bar{background:var(--dm-surface)!important;border-color:var(--dm-line)!important;color:var(--dm-ink)!important;box-shadow:none}
+html[data-theme='dark'] .page-heading h1,html[data-theme='dark'] .section-head h3,html[data-theme='dark'] .stat-value,
+html[data-theme='dark'] .workout-page h3,html[data-theme='dark'] .nutrition-page h3,html[data-theme='dark'] .workout-mini-stat strong,
+html[data-theme='dark'] .nutrition-stats strong,html[data-theme='dark'] .nutrition-food-line strong,
+html[data-theme='dark'] .history-set-title b,html[data-theme='dark'] .nutrition-library-top strong,
+html[data-theme='dark'] .nutrition-list-title,html[data-theme='dark'] .workout-page .session-clock,
+html[data-theme='dark'] .today-metric strong{color:var(--dm-ink)!important}
+html[data-theme='dark'] .page-heading p,html[data-theme='dark'] .section-head p,
+html[data-theme='dark'] .workout-input,html[data-theme='dark'] .workout-filter-bar label,
+html[data-theme='dark'] .micro-text,html[data-theme='dark'] .focus-subtitle,html[data-theme='dark'] .rest-chip,
+html[data-theme='dark'] .history-set-title small,html[data-theme='dark'] .workout-mini-stat span,
+html[data-theme='dark'] .nutrition-log small,html[data-theme='dark'] .nutrition-food-line small,
+html[data-theme='dark'] .library-item small,html[data-theme='dark'] .session-detail-summary span,
+html[data-theme='dark'] .today-table td small{color:var(--dm-sub)!important}
+html[data-theme='dark'] input,html[data-theme='dark'] select,html[data-theme='dark'] textarea,
+html[data-theme='dark'] .workout-input input,html[data-theme='dark'] .workout-input select,
+html[data-theme='dark'] .inline-add input,html[data-theme='dark'] .goal-number,
+html[data-theme='dark'] .workout-filter-bar select{background:var(--dm-input)!important;color:var(--dm-ink)!important;border-color:#52607a!important}
+html[data-theme='dark'] input:disabled{background:#1c2738!important;color:#c4cadd!important}
+html[data-theme='dark'] input::placeholder{color:#aab4ca!important}
+html[data-theme='dark'] .focus-panel,html[data-theme='dark'] .workout-session-panel,html[data-theme='dark'] .workout-log-panel{background:var(--dm-surface)!important}
+html[data-theme='dark'] .superset-partner-card,html[data-theme='dark'] .history-edit-card,
+html[data-theme='dark'] .library-add,html[data-theme='dark'] .drop-stage,
+html[data-theme='dark'] .nutrition-preview,html[data-theme='dark'] .muscle-history-day,
+html[data-theme='dark'] .muscle-detail,html[data-theme='dark'] .session-detail-summary,
+html[data-theme='dark'] .analysis-note,html[data-theme='dark'] .analysis-note.muted,
+html[data-theme='dark'] .focus-extra,html[data-theme='dark'] .cardio-estimate,
+html[data-theme='dark'] .nutrition-log:nth-child(odd),html[data-theme='dark'] .today-future,
+html[data-theme='dark'] .workout-day,html[data-theme='dark'] .help-note,
+html[data-theme='dark'] .locked-panel{background:var(--dm-elevated)!important;border-color:var(--dm-line)!important;color:var(--dm-ink)!important}
+html[data-theme='dark'] .superset-partner-heading h4,html[data-theme='dark'] .history-edit-card h4,
+html[data-theme='dark'] .mapping-label,html[data-theme='dark'] .muscle-history-day strong,
+html[data-theme='dark'] .nutrition-preview strong,html[data-theme='dark'] .muscle-history-day h4{color:var(--dm-ink)!important}
+html[data-theme='dark'] .action-outline,html[data-theme='dark'] .btn.outline,
+html[data-theme='dark'] .btn.soft,html[data-theme='dark'] .tiny-action,
+html[data-theme='dark'] .workout-tabs button:not(.selected),html[data-theme='dark'] .history-tools button,
+html[data-theme='dark'] .focus-exercises button,html[data-theme='dark'] .focus-muscle-rank button,
+html[data-theme='dark'] .muscle-available button,html[data-theme='dark'] .muscle-list button,
+html[data-theme='dark'] .water-quick button,html[data-theme='dark'] .nutrition-category-picker button,
+html[data-theme='dark'] .muscle-chip-picker button,
+html[data-theme='dark'] .theme-control,html[data-theme='dark'] .header-theme{background:#283851!important;border-color:#52627e!important;color:#e1e0f5!important}
+html[data-theme='dark'] .workout-tabs button.selected{background:#5c5191!important;color:#fff!important;border-color:#9c8ce0!important}
+html[data-theme='dark'] .action-primary{background:#8170c7!important;color:#fff!important}
+html[data-theme='dark'] .nutrition-page .action-primary{background:#a96d73!important}
+html[data-theme='dark'] .workout-chip,html[data-theme='dark'] .rest-chip,html[data-theme='dark'] .pill,
+html[data-theme='dark'] .library-category,html[data-theme='dark'] .food-category-tags span,
+html[data-theme='dark'] .log-food-categories{background:#37314f!important;color:#e8dbff!important;border-color:#6b5b9a!important}
+html[data-theme='dark'] .nav-item.active,html[data-theme='dark'] .mobile-bottom button.selected{background:#3d345c!important;color:#e2d8ff!important}
+html[data-theme='dark'] .tinted-exercise{background:#233047!important;border-color:#40526c!important;color:#f2f0f9!important}
+html[data-theme='dark'] .tinted-exercise span,html[data-theme='dark'] .set-row span,html[data-theme='dark'] .nutrition-log>span:first-child,
+html[data-theme='dark'] .muscle-history-exercise>span,html[data-theme='dark'] .muscle-available button,
+html[data-theme='dark'] .analysis-stat-list strong{color:#e8e9f7!important}
+html[data-theme='dark'] .nutrition-charts>div>strong,html[data-theme='dark'] .focus-muscle-rank button b,
+html[data-theme='dark'] .legend span,html[data-theme='dark'] .graph-options select,
+html[data-theme='dark'] .chart-range span{color:#bdc6dc!important}
+html[data-theme='dark'] .recharts-default-tooltip,html[data-theme='dark'] .tooltip{background:var(--dm-tooltip)!important;border:1px solid #52617b!important;color:#f5f2fd!important}
+html[data-theme='dark'] .recharts-default-tooltip .recharts-tooltip-item,html[data-theme='dark'] .recharts-default-tooltip .recharts-tooltip-label{color:#f4f0ff!important}
+html[data-theme='dark'] .recharts-cartesian-grid line{stroke:#43516a!important}
+html[data-theme='dark'] .recharts-text{fill:#c0c9dc!important}
+html[data-theme='dark'] th,html[data-theme='dark'] .table-wrap thead{background:#202e43!important;color:#c9d0df!important}
+html[data-theme='dark'] td,html[data-theme='dark'] .set-row,html[data-theme='dark'] .nutrition-log,
+html[data-theme='dark'] .nutrition-library-top,html[data-theme='dark'] .muscle-training-history,
+html[data-theme='dark'] .today-table th,html[data-theme='dark'] .today-table td{border-color:var(--dm-line)!important}
+html[data-theme='dark'] .hero{background:linear-gradient(110deg,#342b53,#292a4c,#4a303d)!important;border-color:#51476a!important}
+html[data-theme='dark'] .hero-copy h2,html[data-theme='dark'] .hero-copy h2 em{color:#f2eaff!important}
+html[data-theme='dark'] .hero-kicker,html[data-theme='dark'] .hero-copy p,html[data-theme='dark'] .pending-note{color:#ddceef!important}
+html[data-theme='dark'] .orb1{background:#4b3f71!important}html[data-theme='dark'] .orb2{background:#65518a!important}
+html[data-theme='dark'] .moon-crescent:after{background:#65518a!important}
+html[data-theme='dark'] .mobile-bottom{background:#151f30!important;border-color:var(--dm-line)!important}
+html[data-theme='dark'] .modal-screen{background:#090d16c9}
+html[data-theme='dark'] .privacy-card{background:#1e3b42!important;color:#d1f2f0!important}
+html[data-theme='dark'] .privacy-card strong,html[data-theme='dark'] .privacy-card span{color:#c5f0e6!important}
+html[data-theme='dark'] .today-hero{background:linear-gradient(112deg,#2b2d53,#233e53,#443141)!important;border-color:#4b4964!important}
+html[data-theme='dark'] button:focus-visible,html[data-theme='dark'] input:focus-visible,html[data-theme='dark'] select:focus-visible{outline-color:#cfbdff}
+@media(max-width:700px){
+ .workout-page .panel,.nutrition-page .panel{padding:18px}
+ .workout-three{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .workout-three>.workout-input:last-child{grid-column:auto}
+ .history-tools{align-items:stretch;flex-direction:column}
+ .history-tools .workout-input{width:100%}
+ .superset-partner-card,.history-edit-card,.library-add{padding:14px}
+ .set-row{flex-wrap:wrap}
+ .muscle-chip-picker button,.nutrition-category-picker button{padding:10px 12px}
+}
+@media(max-width:430px){
+ .workout-three{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .history-set-title{min-width:100%}
+ .nutrition-entry-grid{grid-template-columns:1fr}
+}
+/* Final pass: semantic status colour, navigation, Sleep dialogs and dashboard primitives. */
+html[data-theme='dark'] .pill.green{background:#193d38!important;color:#a7f0d5!important}
+html[data-theme='dark'] .pill.orange{background:#48372a!important;color:#ffd69d!important}
+html[data-theme='dark'] .pill.red{background:#482c39!important;color:#ffc2ca!important}
+html[data-theme='dark'] .pill.purple{background:#353151!important;color:#ddd2ff!important}
+html[data-theme='dark'] .pill.neutral{background:#30394b!important;color:#d2dae7!important}
+html[data-theme='dark'] .stat-icon.purple,html[data-theme='dark'] .today-metric-icon{background:#383458!important;color:#d0bdff!important}
+html[data-theme='dark'] .stat-icon.peach,html[data-theme='dark'] .today-metric.calories .today-metric-icon{background:#503b36!important;color:#ffd1b9!important}
+html[data-theme='dark'] .stat-icon.mint,html[data-theme='dark'] .today-metric.protein .today-metric-icon,
+html[data-theme='dark'] .today-metric.target .today-metric-icon{background:#254a46!important;color:#b0f5e5!important}
+html[data-theme='dark'] .stat-icon.coral,html[data-theme='dark'] .today-metric.workout .today-metric-icon{background:#493542!important;color:#ffc0da!important}
+html[data-theme='dark'] .today-metric.water .today-metric-icon{background:#2b435c!important;color:#b8dcff!important}
+html[data-theme='dark'] .module-tile,html[data-theme='dark'] .module-icon,html[data-theme='dark'] .lilac-panel,
+html[data-theme='dark'] .chart-range,html[data-theme='dark'] .chart-overflow,html[data-theme='dark'] .snapshot,
+html[data-theme='dark'] .graph-options select,html[data-theme='dark'] .mini-bar,html[data-theme='dark'] .progress-track,
+html[data-theme='dark'] .workout-filter-bar select,html[data-theme='dark'] .nutrition-date{
+ background:#233249!important;border-color:#42516b!important;color:#e8e7f7!important
+}
+html[data-theme='dark'] .chart-range button,html[data-theme='dark'] .icon-button,
+html[data-theme='dark'] .mobile-bottom button,html[data-theme='dark'] .nav-item{color:#c6c9de!important}
+html[data-theme='dark'] .mobile-bottom button.selected,html[data-theme='dark'] .nav-item.active{color:#ebddff!important}
+html[data-theme='dark'] .snapshot-line,html[data-theme='dark'] .stat-label,html[data-theme='dark'] .chart-foot,
+html[data-theme='dark'] .library-category,html[data-theme='dark'] .nutrition-stats strong small{color:#bdc7da!important}
+html[data-theme='dark'] .insight-row strong,html[data-theme='dark'] .history td strong,
+html[data-theme='dark'] .modal strong,html[data-theme='dark'] .today-table tbody th{color:#f1edff!important}
+html[data-theme='dark'] .action-primary:disabled{background:#4b5366!important;color:#ced1dd!important}
+html[data-theme='dark'] .btn.danger{background:#4a303b!important;color:#ffc1c4!important}

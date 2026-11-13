@@ -1,25 +1,14 @@
-# Changelog
+# Daymark changes
 
-## 0.3.0 - Cross-module dashboard, nutrition and workout insights
+## v0.4.0 - Unified aesthetics, full superset logging, editable history and categories
 
-- Rebuilt Today as a cross-module landing page with recent sleep, protein, water, workouts and gross exercise-energy estimate.
-- Added 3/7/30-day comparison windows with recorded-day coverage. Unrecorded nutrition is not assumed zero.
-- Sleep chart hover details now show recorded bedtime, wake-up and both duration metrics.
-- Sleep anomalies: compare consecutive clock shifts with the prior night if either shift crosses threshold; otherwise compare adjusted duration with the median of up to 14 previous complete nights, requiring at least five.
-- Maintained one-date manual sleep entry and Edit/Delete in sleep history.
-- Added workout group and Push/Pull/Legs filters to live set logging, progress, and exercise library.
-- Added workout recommendation panel with recency ranking, optional core suggestions and a PPL restart approach after a long break.
-- Redesigned interactive muscle map as vector paths with front/back views, keyboard controls, session details, and suggested exercises.
-- Added color-coded muscle groups to workout timeline and detailed logs.
-- Added conservative context explanations (superset, drop set, exercise order and shorter rest) and neutral plateau warnings.
-- Added Nutrition & Hydration: user-defined foods, per-portion nutrition, immutable saved-log nutrient snapshots, history and water logging.
-- Added editable bodyweight (60 kg reference), protein (120 g), provisional water (2.1 L), optional exercise-burn and workout-day targets.
-- Removed redundant Cardio and Body Weight tabs; treadmill remains inside Workout. Study is reserved as a future module.
-- Added dark mode and user-confirmed PWA update prompt.
-- Extended IndexedDB schema to v3; backups/export include nutrition and water.
-- No new external APIs, backend or recurring charges.
+- One visual system based on the Sleep Tracker: lavender/peach/blue accents, coordinated cards and typography. Workout no longer uses a strong green theme; Nutrition uses peach/blue accents.
+- Added `src/styles.polish.css`, imported after the existing stylesheet. Light and dark palettes cover cards, inputs, tabs, modals, chart tooltips, history, forms, new category controls and small-screen breakpoints.
+- Superset now requires independent load, unit and reps for the second exercise and writes **two linked sets** in a Dexie transaction. Each superset round receives a unique group ID. Both completion times are marked as *grouped*, never a precise rest interval.
+- Added History editing: add forgotten sets to an existing session, correct existing loads, reps, exercise and dropset, delete individual sets, and correct assigned session date. Edited and retrospectively logged sets are marked `timestampSource: 'manual'`. Their displayed times are hidden, and they do not contribute to rest comparisons.
+- Exercise library now supports creating/editing exercise names, category, equipment, Push/Pull/Legs/core/other override, and primary/secondary muscle-group mappings. Stable IDs preserve the relationship to historical workout data.
+- Nutrition foods now support user-defined multiple categories (e.g. Non-veg, Bread, Dairy) and category filtering. Food logs retain the categories at time of logging as part of the nutrient snapshot.
+- Backup/restore validators accept the new optional fields while continuing to accept v0.1-v0.3 backups. Database name and Dexie indexed schema version remain unchanged because new fields are stored without new indexes.
+- Added independent superset/timing unit tests; retained previous tests.
 
-## 0.2.x - Earlier release
-
-- Sleep and Workout logging, demo data and GitHub Pages workflow.
-- v0.2 build fixes for Dexie transactions and nullable pause interval.
+**Limitations:** Local full build/browser render unavailable in the assistant environment (npm registry DNS error). GitHub Actions is the build gate, followed by phone QA in light/dark. Always back up before major updates.

@@ -11,7 +11,7 @@ export function activeMinutes(session:WorkoutSession,nowISO=new Date().toISOStri
  return Math.max(0,Math.round((end-started-paused)/60000));
 }
 export function restApproxMinutes(prev:WorkoutSet|undefined,current:WorkoutSet):number|null {
- if(!prev||prev.sessionId!==current.sessionId)return null;
+ if(!prev||prev.sessionId!==current.sessionId||prev.timestampSource==='manual'||current.timestampSource==='manual'||prev.timestampSource==='grouped'||current.timestampSource==='grouped'||prev.supersetGroupId||current.supersetGroupId)return null;
  const delta=(Date.parse(current.completedAt)-Date.parse(prev.completedAt))/60000;
  return Number.isFinite(delta)&&delta>=0?Math.round(delta*10)/10:null;
 }
@@ -52,6 +52,7 @@ export function exerciseTrend(sets:WorkoutSet[],sessions:WorkoutSession[],id:str
 export function contextMessage(current:WorkoutSet[],previous:WorkoutSet[],currentSessionSets:WorkoutSet[]=current,previousSessionSets:WorkoutSet[]=previous):string {
  if(!previous.length||!current.length)return 'More comparable sessions are needed';
  if(current.some(s=>s.supersetGroupId))return 'Superset session: lower reps are not treated as a strength decline';
+ if([...currentSessionSets,...previousSessionSets].some(s=>s.timestampSource==='manual'))return 'Manually entered or corrected sets: exercise order and rest may be incomplete; compare loads and reps without flagging a decline';
  if(current.some(s=>s.setKind==='dropset'))return 'Drop-set context: review separately from straight working sets';
  const ordered=(list:WorkoutSet[])=>[...list].sort((a,b)=>a.completedAt.localeCompare(b.completedAt));
  const uniqueOrder=(all:WorkoutSet[])=>[...new Set(ordered(all).map(x=>x.exerciseId))];

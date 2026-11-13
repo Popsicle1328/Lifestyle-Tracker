@@ -56,13 +56,13 @@ export async function addDemoOnceMore(){
 }
 const sleepSchema=z.object({id:z.string().min(1),sleepDate:z.string().regex(/^\d{4}-\d{2}-\d{2}$/),bedtime:z.string().datetime({offset:true}),wakeup:z.string().datetime({offset:true}).nullable(),createdAt:z.string().datetime({offset:true}),updatedAt:z.string().datetime({offset:true}),sourceBed:z.enum(['now','manual']),sourceWake:z.enum(['now','manual']).nullable(),note:z.string().optional(),isDemo:z.boolean().optional()});
 const prefSchema=z.object({id:z.literal('main'),latencyMinutes:z.number().int().min(0).max(240),idealMinMinutes:z.number().int(),idealMaxMinutes:z.number().int(),yellowLowMinutes:z.number().int(),redLowMinutes:z.number().int(),yellowHighMinutes:z.number().int(),redHighMinutes:z.number().int(),fluctuationMinutes:z.number().int().min(1),dayCutoffHour:z.number().int().min(0).max(23)});
-const exerciseSchema=z.object({id:z.string(),name:z.string(),category:z.string(),equipment:z.string(),loadMode:z.string().optional(),primaryMuscles:z.array(z.string()),secondaryMuscles:z.array(z.string()),reviewStatus:z.string().optional(),notes:z.string().optional(),aliases:z.array(z.string()).optional(),isCustom:z.boolean().optional()});
+const exerciseSchema=z.object({id:z.string(),name:z.string(),category:z.string(),equipment:z.string(),loadMode:z.string().optional(),primaryMuscles:z.array(z.string()),secondaryMuscles:z.array(z.string()),reviewStatus:z.string().optional(),notes:z.string().optional(),aliases:z.array(z.string()).optional(),isCustom:z.boolean().optional(),splitOverride:z.enum(['push','pull','legs','core','other']).optional()});
 const unit=z.enum(['kg_each','kg_total','machine_level','stack_kg','bodyweight']);
 const sessionSchema=z.object({id:z.string(),date:z.string(),startedAt:z.string(),endedAt:z.string().nullable(),status:z.enum(['active','paused','completed']),pauses:z.array(z.object({startedAt:z.string(),endedAt:z.string().nullable()})),bodyWeightKg:z.number().nullable(),notes:z.string(),createdAt:z.string(),updatedAt:z.string(),isDemo:z.boolean().optional()});
-const setSchema=z.object({id:z.string(),sessionId:z.string(),exerciseId:z.string(),sequence:z.number().int(),weight:z.number().nullable(),reps:z.number().int(),unit,completedAt:z.string(),startedAt:z.string().nullable(),setKind:z.enum(['working','warmup','dropset']),dropStages:z.array(z.object({weight:z.number(),reps:z.number(),unit,at:z.string()})),supersetGroupId:z.string().nullable(),effort:z.enum(['normal','near_failure','failure']).nullable(),notes:z.string(),isDemo:z.boolean().optional()});
+const setSchema=z.object({id:z.string(),sessionId:z.string(),exerciseId:z.string(),sequence:z.number().int(),weight:z.number().nullable(),reps:z.number().int(),unit,completedAt:z.string(),startedAt:z.string().nullable(),setKind:z.enum(['working','warmup','dropset']),dropStages:z.array(z.object({weight:z.number(),reps:z.number(),unit,at:z.string()})),supersetGroupId:z.string().nullable(),effort:z.enum(['normal','near_failure','failure']).nullable(),notes:z.string(),isDemo:z.boolean().optional(),timestampSource:z.enum(['automatic','grouped','manual']).optional()});
 const cardioSchema=z.object({id:z.string(),sessionId:z.string(),kind:z.literal('incline_treadmill'),startedAt:z.string(),endedAt:z.string(),durationMinutes:z.number(),speedKmh:z.number(),inclinePercent:z.number(),bodyWeightKg:z.number().nullable(),isDemo:z.boolean().optional()});
 const nutrient=z.number().finite().min(0).max(1000000);
-const foodSnapshotSchema=z.object({name:z.string().min(1),portionAmount:z.number().positive(),portionUnit:z.string().min(1),calories:nutrient,protein:nutrient,carbs:nutrient,fat:nutrient});
+const foodSnapshotSchema=z.object({name:z.string().min(1),portionAmount:z.number().positive(),portionUnit:z.string().min(1),calories:nutrient,protein:nutrient,carbs:nutrient,fat:nutrient,categories:z.array(z.string()).optional()});
 const foodSchema=foodSnapshotSchema.extend({id:z.string().min(1),createdAt:z.string(),updatedAt:z.string(),isArchived:z.boolean().optional()});
 const foodLogSchema=z.object({id:z.string(),date:z.string(),foodId:z.string(),portions:z.number().positive(),foodSnapshot:foodSnapshotSchema,at:z.string(),note:z.string()});
 const waterLogSchema=z.object({id:z.string(),date:z.string(),amountMl:z.number().positive(),at:z.string()});
@@ -97,8 +97,8 @@ export async function exportCsv(){const list=await db.sleep.orderBy('sleepDate')
 export async function exportWorkoutCsv(){
  const [sets,sessions,exercises,cardio]=await Promise.all([db.workoutSets.toArray(),db.workoutSessions.toArray(),db.exercises.toArray(),db.cardioIntervals.toArray()]);
  const byS=new Map(sessions.map(s=>[s.id,s]));const byE=new Map(exercises.map(e=>[e.id,e]));
- const cols=['sessionDate','sessionId','exercise','set','weight','unit','reps','kind','dropStages','supersetGroup','effort','completedAt','isDemo'];
- const rows=sets.map(s=>[byS.get(s.sessionId)?.date,s.sessionId,byE.get(s.exerciseId)?.name,s.sequence,s.weight??'',s.unit,s.reps,s.setKind,JSON.stringify(s.dropStages),s.supersetGroupId??'',s.effort??'',s.completedAt,s.isDemo?'YES':'NO'].map(quote).join(','));
+ const cols=['sessionDate','sessionId','exercise','set','weight','unit','reps','kind','dropStages','supersetGroup','effort','completedAt','timingSource','isDemo'];
+ const rows=sets.map(s=>[byS.get(s.sessionId)?.date,s.sessionId,byE.get(s.exerciseId)?.name,s.sequence,s.weight??'',s.unit,s.reps,s.setKind,JSON.stringify(s.dropStages),s.supersetGroupId??'',s.effort??'',s.timestampSource==='manual'?'':s.completedAt,s.timestampSource??'automatic',s.isDemo?'YES':'NO'].map(quote).join(','));
  downloadFile('daymark-workout-sets.csv',new Blob([[cols.join(','),...rows].join('\r\n')],{type:'text/csv;charset=utf-8'}));
  const cardioCols=['sessionDate','sessionId','durationMinutes','speedKmh','inclinePercent','bodyWeightKg','isDemo'];
  const cardioRows=cardio.map(c=>[byS.get(c.sessionId)?.date,c.sessionId,c.durationMinutes,c.speedKmh,c.inclinePercent,c.bodyWeightKg??'',c.isDemo?'YES':'NO'].map(quote).join(','));
@@ -107,8 +107,8 @@ export async function exportWorkoutCsv(){
 
 export async function exportNutritionCsv(){
  const foods=await db.foodLogs.orderBy('date').toArray();const water=await db.waterLogs.orderBy('date').toArray();
- const header=['date','time','foodId','food','portions','portionAmount','portionUnit','kcal','proteinG','carbsG','fatG','note'];
- const rows=foods.map(f=>[f.date,f.at,f.foodId,f.foodSnapshot.name,f.portions,f.foodSnapshot.portionAmount,f.foodSnapshot.portionUnit,f.foodSnapshot.calories*f.portions,f.foodSnapshot.protein*f.portions,f.foodSnapshot.carbs*f.portions,f.foodSnapshot.fat*f.portions,f.note].map(quote).join(','));
+ const header=['date','time','foodId','food','categories','portions','portionAmount','portionUnit','kcal','proteinG','carbsG','fatG','note'];
+ const rows=foods.map(f=>[f.date,f.at,f.foodId,f.foodSnapshot.name,(f.foodSnapshot.categories??[]).join('; '),f.portions,f.foodSnapshot.portionAmount,f.foodSnapshot.portionUnit,f.foodSnapshot.calories*f.portions,f.foodSnapshot.protein*f.portions,f.foodSnapshot.carbs*f.portions,f.foodSnapshot.fat*f.portions,f.note].map(quote).join(','));
  downloadFile('daymark-nutrition.csv',new Blob([[header.join(','),...rows].join('\r\n')],{type:'text/csv;charset=utf-8'}));
  downloadFile('daymark-water.csv',new Blob([['date,time,amountMl',...water.map(w=>[w.date,w.at,w.amountMl].map(quote).join(','))].join('\r\n')],{type:'text/csv;charset=utf-8'}));
 }

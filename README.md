@@ -1,3 +1,7 @@
+# Daymark v0.4 update
+
+Read [CHANGELOG.md](CHANGELOG.md) and [THEME_QA.md](THEME_QA.md) for the new features and testing steps. **Export a JSON backup before updating.**
+
 # Daymark - Fitness & Lifestyle PWA (v0.3)
 
 A zero-cost, offline-first, personal React + TypeScript + Vite app backed by IndexedDB/Dexie. The app is a PWA hosted using GitHub Pages. It has no backend and no automatic cross-device sync.

@@ -54,3 +54,14 @@
 - Database name unchanged, migration v2 -> v3 adds food/water/preference tables, no destructive old-table changes.
 - Demo records stay labelled and separately removable.
 - GitHub hosts code only. Personal data is device-local and never automatically synced.
+
+## Daymark v0.4 decisions and additions
+
+- Match Sleep Tracker's card styling, typography, spacing and soft accents throughout the app, with Workout lavender/blue and Nutrition peach/blue.
+- Preserve visible semantic colours (green success, peach/orange caution and coral failure) in both light and dark modes.
+- A superset round logs **two sets**, each with independent load, units and reps, linked by an ID. Tapping Complete records both atomically. The shared tap is a grouped approximate time; rest is not measured.
+- Users may edit a set in an active session or add/edit missed historical workout sets. Such manually changed entries do not display a set-completion timestamp or a rest interval and do not contribute rest-time comparisons.
+- Exercise library creation/editing must include custom exercise name, category, equipment, Push/Pull/Legs/Core/Other classification (or auto classification), and primary/secondary muscle selection.
+- Food library entries may have multiple user-defined categories; past nutrition logs retain a snapshot of categories and nutrient values from when the entry was logged.
+- No IndexedDB schema upgrade is necessary for these optional unindexed fields. The database name remains `daymark-local-v1` and Dexie schema remains version 3.
+- All features must undergo dark-mode visual QA on mobile and desktop as detailed in `THEME_QA.md`.

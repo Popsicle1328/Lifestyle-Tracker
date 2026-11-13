@@ -20,6 +20,7 @@ export function regionOf(exercise:ExerciseDefinition):string[]{
  return muscleRegions.filter(r=>r.muscles.some(m=>exercise.primaryMuscles.includes(m))).map(r=>r.id);
 }
 export function splitOf(exercise:ExerciseDefinition):Split|'core'|'other' {
+ if(exercise.splitOverride)return exercise.splitOverride;
  const groups=regionOf(exercise);
  if(groups.some(g=>['chest','shoulders','triceps'].includes(g)))return 'push';
  if(groups.some(g=>['back','biceps','forearms'].includes(g)))return 'pull';
@@ -60,7 +61,7 @@ export function recommendFocus(sessions:WorkoutSession[],sets:WorkoutSet[],exerc
   {split:'pull',focus:['back','biceps','forearms']},
   {split:'legs',focus:['quads','hamstrings','glutes','calves']},
  ];
- const completed=sessions.filter(s=>s.status==='completed'&&s.date<=currentKey).sort((a,b)=>b.startedAt.localeCompare(a.startedAt));
+ const completed=sessions.filter(s=>s.status==='completed'&&s.date<=currentKey).sort((a,b)=>b.date.localeCompare(a.date)||b.startedAt.localeCompare(a.startedAt));
  const lastWorkout=completed[0];
  const gap=lastWorkout?Math.max(0,differenceInCalendarDays(atDate,new Date(lastWorkout.startedAt))):null;
  const recentSplits=completed.slice(0,4).map(s=>{
